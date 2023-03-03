@@ -1,0 +1,71 @@
+li {
+  margin-left: 20px;
+}
+@keyframes example {
+  0% {
+    background: radial-gradient((rgb(175, 175, 99)), rgb(177, 177, 94));
+    border-radius: 10px;
+  }
+  25% {
+    background: radial-gradient(rgb(191, 191, 83), rgb(75, 75, 179));
+    border-radius: 20px;
+  }
+  50% {
+    background: radial-gradient(rgb(75, 75, 179), rgb(66, 177, 66));
+    border-radius: 30px;
+  }
+  75% {
+    background: radial-gradient(rgb(66, 177, 66), rgb(144, 63, 63));
+    border-radius: 40px;
+  }
+  100% {
+    background: radial-gradient(rgb(144, 63, 63), rgb(175, 175, 99));
+    border-radius: 50px;
+  }
+}
+.row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.col {
+  text-align: center;
+  text-align: justify;
+  text-transform: capitalize;
+  padding: 30px;
+  margin: 10px;
+  background-color: rgb(79, 77, 77);
+  border: 3px inset grey;
+  outline: 3px outset darkcyan;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 3px 4px rgb(157, 99, 157);
+  animation-name: example;
+  animation-duration: 25s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: cubic-bezier();
+}
+a{
+  text-decoration: none;
+  color:brown;
+}
+a:hover{
+  color: brown;
+   text-decoration: none; 
+  text-shadow: 1px 1px 1px brown;
+}
+
+button {
+  margin: 4px;
+  padding: 4px;
+}
+h4 {
+  font-weight: 700;
+  color: white;
+}
+h2 {
+  color: rgb(2, 6, 255);
+}
+h3 {
+  color: black;
+}
