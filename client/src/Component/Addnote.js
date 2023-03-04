@@ -37,9 +37,11 @@ const Addnote = () => {
 
     return (
         <>
-            <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModalCenter">
-                Launch demo modal
+          <center>
+            <button type="button" class="btn btn-outline-primary mt-3 p-3 " data-toggle="modal" data-target="#exampleModalCenter">
+                Add Card <i class="fa-solid fa-arrow-up"></i>
             </button>
+          </center>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -50,7 +52,7 @@ const Addnote = () => {
                         </div>
                         <div class="modal-body">
                             <div class="container">
-                                <div class=" text-center mt-2 ">
+                                <div class=" text-center mt-2  ">
                                     <h1 >Add Note</h1>
                                 </div>
                                 <div class="row ">

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../App.css";
 const Viewnote = () => {
+  const navigator = useNavigate();
   const [detail, setDetails] = useState([]);
   const getData = async () => {
     const res = await fetch("/getData", {
@@ -14,16 +15,34 @@ const Viewnote = () => {
     });
     const data = await res.json();
     setDetails(data);
-    console.log(detail);
   };
   useEffect(() => {
     getData();
   }, [getData]);
+  const update =(id)=>{
+     navigator(`/updatenote/${id}`);
+  }
+  const deletes =async(_id)=>{
+      const res = await fetch("/deleteData",{
+        method:"delete",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body:JSON.stringify({
+          _id
+        })
+      })
+      const data = await res.json();
+      if(res.status==200){
+        window.alert(data.message);
+        navigator("/viewnote");
+      }
+  }
   return (
     <div className="container">
       <div className="row">
         <NavLink to="/important">
-          <button className="btn btn-info">Favourites</button>
+          <button className="btn btn-outline-info">Switch To Importants <i class="fa-solid fa-arrow-right"></i></button>
         </NavLink>
       </div>
       <div className="row row-cols-4">
@@ -39,8 +58,8 @@ const Viewnote = () => {
                 <NavLink to={`/singlenote/${generateID}`}>
                   <button className="btn btn-success">Read</button>
                 </NavLink>
-                <button className="btn btn-primary">Delete</button>
-                <button className="btn btn-danger">Update</button>
+                <button className="btn btn-primary" onClick={()=>deletes(elem._id)}>Delete</button>
+                <button className="btn btn-danger" onClick={()=>update(generateID)}>Update</button>
               </div>
             </>
           );

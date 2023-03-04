@@ -7,6 +7,7 @@ import Addnote from './Component/Addnote';
 import Viewnote from './Component/Viewnote';
 import Singlenote from './Component/Singlenote';
 import Important from './Component/Important';
+import Updatenote from './Component/Updatenote';
 const App = () => {
   return (
     <>
@@ -19,6 +20,7 @@ const App = () => {
          <Route path='/viewnote'element={<Viewnote/>}/>
          <Route path='/singlenote/:id' element={<Singlenote/>}/>
          <Route path='/important' element={<Important/>}></Route>
+         <Route path="/updatenote/:id" element={<Updatenote/>}/>
       </Routes>
     </>
   )

@@ -55,7 +55,7 @@ const Singlenote = () => {
                   <h2>{name}</h2>
                   <h3>{text}</h3>
                   <NavLink to="/viewnote">
-                    <button className="btn btn-success">Notes</button>
+                    <button className="btn btn-success">Switch To Notes</button>
                   </NavLink>
                   <button
                     className="btn btn-primary"

@@ -22,6 +22,11 @@ const Nav = () => {
                                 ViewNotes
                             </NavLink>
                         </li>
+                        <li className="nav-item dropdown ">
+                            <NavLink className="nav-NavLink" to="/important" id="navbarDropdown" role="button">
+                                Important
+                            </NavLink>
+                        </li>
                         <li className="nav-item">
                             <NavLink className="nav-NavLink " to="/signup">SignUp</NavLink>
                         </li>

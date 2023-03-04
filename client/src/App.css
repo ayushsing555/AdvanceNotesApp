@@ -1,6 +1,9 @@
 li {
   margin-left: 20px;
 }
+.modal-body{
+   margin-top: 20px;
+}
 @keyframes example {
   0% {
     background: radial-gradient((rgb(175, 175, 99)), rgb(177, 177, 94));
@@ -23,11 +26,7 @@ li {
     border-radius: 50px;
   }
 }
-.row{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .col {
   text-align: center;
   text-align: justify;

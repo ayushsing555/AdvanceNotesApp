@@ -176,25 +176,53 @@ router.post("/addData", authentication, async (req, res) => {
   }
 });
 
-router.get("/AllUsers",async(req,res)=>{
-    const users = await User.find({});
-    res.send(users);
+router.get("/AllUsers", async (req, res) => {
+  const users = await User.find({});
+  res.send(users);
+});
+router.get("/getData", authentication, async (req, res) => {
+  const identification = req.identification;
+  const data = await Data.find({ identification: identification });
+  req.data = data;
+  res.send(req.data);
+});
+router.post("/addFavorite", async (req, res) => {
+  const { generateID, identification } = req.body;
+  console.log(generateID);
+  console.log(identification);
+  const data = await Data.findOne({
+    generateID: generateID,
+    identification: identification,
+  });
+  const result = await data.addFavourite();
+  if (result) {
+    res.status(200).json({ message: "Added to Favourite" });
+  }
+});
+router.put("/updateData", async (req, res) => {
+  const { _id, name, text } = req.body;
+  console.log(_id);
+  const result = await Data.findByIdAndUpdate(
+    { _id },
+    {
+      name: name,
+      text: text,
+    },
+    {
+      new: true,
+    }
+  );
+  if (result) {
+    res.status(200).json({ message: "successfully updated" });
+  }
+});
+router.delete("/deleteData",async(req,res)=>{
+    const {_id} = req.body;
+    console.log(_id);
+    const result = await Data.findByIdAndDelete({_id});
+    if(result){
+      res.status(200).json({message:"Successfully deleted"});
+    }
 })
-router.get("/getData",authentication,async(req,res)=>{
-    const identification = req.identification;
-    const data = await Data.find({"identification":identification});
-    req.data = data;
-    res.send(req.data);
-})
-router.post("/addFavorite",async(req,res)=>{
-   const {generateID,identification} = req.body;
-   console.log(generateID);
-   console.log(identification)
-   const data = await Data.findOne({generateID:generateID,identification:identification});
-   const result =await  data.addFavourite();
-   if(result){
-    res.status(200).json({message:"Added to Favourite"});
-   }
-})
-router.get("/get")
+router.get("/get");
 module.exports = router;
