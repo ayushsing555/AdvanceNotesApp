@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../App.css";
 const Important = () => {
+  const navigator = useNavigate();
   const [detail, setDetails] = useState([]);
   const getData = async () => {
     const res = await fetch("/getData", {
@@ -21,6 +22,23 @@ const Important = () => {
   useEffect(() => {
     getData();
   }, [getData]);
+  const remove = async(_id)=>{
+    const res = await fetch("/updateList",{
+       method:"put",
+       headers:{
+         "Content-Type":"application/json"
+       },
+       body:JSON.stringify({
+         _id
+       })
+    })
+    const data = await res.json();
+    if(res.status==200){
+      window.alert(data.message);
+      navigator("/important");
+    }
+     
+  }
   return (
     <div className="container">
       <div className="row">
@@ -34,14 +52,14 @@ const Important = () => {
           let text1 = text.substring(0, 15);
           return (
             <>
-              <div className="col">
+              <div className="cols">
                 <h4>{generateID}</h4>
                 <h2>{name}</h2>
                 <h3>{text.length >= 15 ? `${text1}...` : `${text}`}</h3>
                 <NavLink to={`/singlenote/${generateID}`}>
                   <button className="btn btn-success">Read</button>
                 </NavLink>
-                <button className="btn btn-danger">Remove</button>
+                <button className="btn btn-danger" onClick={()=>remove(elem._id)}>Remove</button>
               </div>
             </>
           );

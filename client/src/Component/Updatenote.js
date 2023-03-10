@@ -6,7 +6,7 @@ const Updatenote = () => {
   const [name, setName] = useState();
   const [text, setText] = useState();
   const [_id,setId] = useState();
-  const handleInput = () => {};
+  // const handleInput = () => {};
   //   const handleSubmit = () => {};
   const { id } = useParams();
   const getData = async () => {
@@ -110,7 +110,7 @@ const Updatenote = () => {
                   Save Changes
                 </button>
               </NavLink>
-              <NavLink to="/important">
+              <NavLink to="/viewnote">
                 <button type="button" className="btn btn-outline-info">
                   Cancel
                 </button>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 const Singlenote = () => {
+  const navigator = useNavigate();
   const { id } = useParams();
   const [detail, setDetails] = useState([]);
   const getData = async () => {
@@ -14,16 +15,16 @@ const Singlenote = () => {
       credentials: "include",
     });
     let data = await res.json();
-    console.log(data);
     let updateData = data.filter((elem) => {
       if (elem.generateID == id) return elem;
     });
     setDetails(updateData);
+    console.log(detail);
   };
   useEffect(() => {
     getData();
   }, []);
-  const favourite =async(e)=>{
+  const favourites =async(e)=>{
     e.preventDefault();
     let generateID = detail[0].generateID;
     let identification = detail[0].identification;
@@ -40,6 +41,7 @@ const Singlenote = () => {
     const data = await res.json();
     if(res.status==200){
         window.alert(data.message);
+        navigator(`/singlenote/${generateID+1}`);
     }
   }
   return (
@@ -47,22 +49,23 @@ const Singlenote = () => {
       <div className="container">
         <div className="row row-cols-1">
           {detail.map((elem) => {
-            const { name, text, generateID } = elem;
+            const { name, text, generateID,favourite } = elem;
             return (
               <>
-                <div className="col">
+                <div className="cols item">
                   <h4>{generateID}</h4>
                   <h2>{name}</h2>
                   <h3>{text}</h3>
+                  
                   <NavLink to="/viewnote">
                     <button className="btn btn-success">Switch To Notes</button>
-                  </NavLink>
+                  </NavLink>{
+                    !favourite?
                   <button
                     className="btn btn-primary"
-                    onClick={favourite}
-                  >
-                    Add to Favourite
-                  </button>
+                    onClick={favourites}>Add To Favourite
+                  </button>:""
+                  }
                 </div>
               </>
             );

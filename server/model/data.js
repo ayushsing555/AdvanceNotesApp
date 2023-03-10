@@ -19,6 +19,14 @@ const dataStructure = new mongoose.Schema({
     favourite:{
         type:Boolean,
         default:false
+    },
+    read:{
+        type:Boolean,
+        default:false
+    },
+    downloads:{
+        type:Number,
+        default:0
     }
 })
 dataStructure.methods.addFavourite = async function(){

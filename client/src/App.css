@@ -27,22 +27,30 @@ li {
   }
 }
 
-.col {
+
+.cols {
   text-align: center;
-  text-align: justify;
-  text-transform: capitalize;
-  padding: 30px;
+  text-align: center;
+  padding: 100px;
   margin: 10px;
-  background-color: rgb(79, 77, 77);
-  border: 3px inset grey;
+  /* background-color: rgb(79, 77, 77); */
+   border: 3px  grey;
   outline: 3px outset darkcyan;
-  box-sizing: border-box;
-  box-shadow: 2px 2px 3px 4px rgb(157, 99, 157);
-  animation-name: example;
+ 
+  /* box-shadow: 2px 2px 3px 4px rgb(157, 99, 157); */
+  border: 10px solid transparent;
+  background-color:rgb(165, 241, 169);
+  border-radius: 5px;
+  padding: 15px;
+  border-image: url("../public//image/pexels-engin-akyurt-2154617.jpg") 30 round;
+  /* animation-name: example;
   animation-duration: 25s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
-  animation-timing-function: cubic-bezier();
+  animation-timing-function: cubic-bezier(); */
+}
+.item{
+  text-align: justify;
 }
 a{
   text-decoration: none;
@@ -60,11 +68,14 @@ button {
 }
 h4 {
   font-weight: 700;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 h2 {
   color: rgb(2, 6, 255);
 }
 h3 {
   color: black;
+}
+input{
+  border: 1px solid skyblue;
 }
