@@ -6,6 +6,10 @@ const userstructure = new mongoose.Schema({
         type: String,
         required: true
     },
+    createTime:{
+        type:Date,
+        default:Date.now()
+    },
     password: {
         type: String,
         required: true
@@ -36,6 +40,10 @@ const userstructure = new mongoose.Schema({
         token: {
             type: String,
             required: true
+        },
+        time:{
+            type:Date,
+            default:Date.now()
         }
     }]
 });
@@ -46,7 +54,7 @@ userstructure.methods.addData = async function (name, text, generateID) {
 }
 userstructure.methods.generateToken = async function (next) {
     const token = jwt.sign({ _id: this._id }, process.env.SECRET_KEY);
-    this.tokens = this.tokens.concat({ token: token });
+    this.tokens = this.tokens.concat({ token: token ,time:Date.now() });
     this.save();
     return token;
 }

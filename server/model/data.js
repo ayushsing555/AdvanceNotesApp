@@ -8,6 +8,10 @@ const dataStructure = new mongoose.Schema({
         type:String,
         required:true
     },
+    createDate:{
+         type:Date,
+         default:Date.now()
+    },
     identification:{
         type:String,
         reqired:true
@@ -27,11 +31,24 @@ const dataStructure = new mongoose.Schema({
     downloads:{
         type:Number,
         default:0
-    }
+    },
+    readTime:[{
+        slot:{
+             type:Date,
+             default:Date.now()
+        }
+    }]
 })
 dataStructure.methods.addFavourite = async function(){
     this.favourite = true;
     await this.save();
+    return this;
+}
+dataStructure.methods.addTime = async function() {
+    const date = Date.now();
+    console.log(date)
+    this.readTime = this.readTime.concat({slot:date});
+    await this.save()
     return this;
 }
 const Data = mongoose.model("Data",dataStructure);

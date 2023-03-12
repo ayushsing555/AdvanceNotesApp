@@ -5,7 +5,6 @@ const authentication = require("../authentication/auth");
 const User = require("../model/user");
 const Data = require("../model/data");
 const JsFileDownloader = require("js-file-downloader");
-const cors = require("cors")
 router.get("/", (req, res) => {
   res.send("it is router");
 });
@@ -136,7 +135,11 @@ router.post("/signin", async (req, res) => {
     if (isMatch) {
       const token = await user.generateToken();
       res.cookie("jwt", token);
-      return res.status(200).json({ message: "logged in successful",token:token });
+      return res.status(200).json({
+        message: "logged in successful",
+        token: token,
+        identification: user.identification,
+      });
     } else {
       console.log("password doe not match");
     }
@@ -166,6 +169,7 @@ router.post("/addData", authentication, async (req, res) => {
       text,
       generateID,
       identification,
+      createDate: Date.now(),
     });
     const result = await newData.save();
     if (result && data) {
@@ -186,6 +190,18 @@ router.get("/getData", authentication, async (req, res) => {
   const data = await Data.find({ identification: identification });
   req.data = data;
   res.send(req.data);
+});
+router.get("/getData/:id", authentication, async (req, res) => {
+  const id = req.params.id;
+  const identification = req.identification;
+  const data = await Data.find({ identification, generateID: id });
+  console.log(data);
+  if (data.length == 0) {
+    res.status(404).send({ message: " not valid" });
+  } else {
+    req.data = data;
+    res.send(req.data);
+  }
 });
 router.post("/addFavorite", async (req, res) => {
   const { generateID, identification } = req.body;
@@ -218,55 +234,71 @@ router.put("/updateData", async (req, res) => {
     res.status(200).json({ message: "successfully updated" });
   }
 });
-router.delete("/deleteData",async(req,res)=>{
-    const {_id} = req.body;
-    console.log(_id);
-    const result = await Data.findByIdAndDelete({_id});
-    if(result){
-      res.status(200).json({message:"Successfully deleted"});
-    }
-})
-
-router.put("/updateList",async(req,res)=>{
-  const {_id} = req.body;
-  const result = await Data.findByIdAndUpdate({_id},{
-      favourite : false
-  },{
-    new:true
-  })
-  console.log(result);
-  if(result){
-    res.status(200).json({"message":"removed from the list"});
+router.delete("/deleteData", async (req, res) => {
+  const { _id } = req.body;
+  console.log(_id);
+  const result = await Data.findByIdAndDelete({ _id });
+  if (result) {
+    res.status(200).json({ message: "Successfully deleted" });
   }
-})
-router.get("/getAllData",async(req,res)=>{
-    const data = await Data.find();
-    res.send(data);
-})
-router.get("/logout",async(req,res)=>{
-  console.log("ayush")
-   token = req.cookies.jwt;
-  console.log(token+" ayush ");
+});
+
+router.put("/updateList", async (req, res) => {
+  const { _id } = req.body;
+  const result = await Data.findByIdAndUpdate(
+    { _id },
+    {
+      favourite: false,
+    },
+    {
+      new: true,
+    }
+  );
+  console.log(result);
+  if (result) {
+    res.status(200).json({ message: "removed from the list" });
+  }
+});
+router.get("/getAllData", async (req, res) => {
+  const data = await Data.find();
+  res.send(data);
+});
+router.get("/logout", async (req, res) => {
+  console.log("ayush");
+  token = req.cookies.jwt;
+  console.log(token + " ayush ");
   res.clearCookie("jwt");
   token = req.cookies.jwt;
-  console.log(token+"singhal");
+  console.log(token + "singhal");
   // res.redirect("/signin");
-})
-router.put("/read",async(req,res)=>{
-    const {_id} = req.body;
-    const result = await Data.findByIdAndUpdate({_id:_id},{
-        read:true
-    },{
-       new:true
-    });
-})
+});
+router.put("/read/:id", async (req, res) => {
+  const _id = req.params.id;
+  console.log(_id);
+  const data = await Data.findOne({ _id });
+  const result = await Data.findByIdAndUpdate(
+    { _id: _id },
+    {
+      read: true,
+    },
+    {
+      new: true,
+    }
+  );
+  console.log(data);
+  const updateData = await data.addTime();
+  console.log(result);
+});
 
-router.put("/updateDownload",async(req,res)=>{
-    const {_id} = req.body;
-    const result = await Data.findOne({_id});
-    console.log(result.downloads);
-    await Data.updateOne({_id},{
-        downloads:result.downloads+1
-    })
-})
+router.put("/updateDownload", async (req, res) => {
+  const { _id } = req.body;
+  const result = await Data.findOne({ _id });
+  console.log(result.downloads);
+  await Data.updateOne(
+    { _id },
+    {
+      downloads: result.downloads + 1,
+    }
+  );
+});
 module.exports = router;
