@@ -79,3 +79,10 @@ h3 {
 input{
   border: 1px solid skyblue;
 }
+
+table th{
+  color: red;
+}
+table td{
+  font-weight: 1000;
+}
