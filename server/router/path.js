@@ -114,6 +114,7 @@ router.post("/register", async (req, res) => {
       email,
       password,
       identification,
+
     });
     const result = await newUser.save();
     res.status(200).json({ message: "successfully registered" });
@@ -169,7 +170,7 @@ router.post("/addData", authentication, async (req, res) => {
       text,
       generateID,
       identification,
-      createDate: Date.now(),
+      createTime:Date.now()
     });
     const result = await newData.save();
     if (result && data) {
@@ -187,7 +188,7 @@ router.get("/AllUsers", async (req, res) => {
 });
 router.get("/getData", authentication, async (req, res) => {
   const identification = req.identification;
-  const data = await Data.find({ identification: identification });
+  const data = await Data.find({ identification: identification }).sort({"createDate":1});
   req.data = data;
   res.send(req.data);
 });
@@ -263,11 +264,11 @@ router.get("/getAllData", async (req, res) => {
   const data = await Data.find();
   res.send(data);
 });
-router.get("/logout", async (req, res) => {
+router.post("/logout", async (req, res) => {
   console.log("ayush");
   token = req.cookies.jwt;
   console.log(token + " ayush ");
-  res.clearCookie("jwt");
+  res.clearCookie('jwt');
   token = req.cookies.jwt;
   console.log(token + "singhal");
   // res.redirect("/signin");
@@ -285,9 +286,7 @@ router.put("/read/:id", async (req, res) => {
       new: true,
     }
   );
-  console.log(data);
   const updateData = await data.addTime();
-  console.log(result);
 });
 
 router.put("/updateDownload", async (req, res) => {

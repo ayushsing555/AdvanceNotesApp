@@ -4,13 +4,12 @@ const dataStructure = new mongoose.Schema({
         type:String,
         required:true
     },
+    createTime:{
+         type:Date
+    },
     text:{
         type:String,
         required:true
-    },
-    createDate:{
-         type:Date,
-         default:Date.now()
     },
     identification:{
         type:String,
@@ -46,7 +45,7 @@ dataStructure.methods.addFavourite = async function(){
 }
 dataStructure.methods.addTime = async function() {
     const date = Date.now();
-    console.log(date)
+    console.log(date);
     this.readTime = this.readTime.concat({slot:date});
     await this.save()
     return this;

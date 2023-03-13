@@ -17,6 +17,7 @@
     "express": "^4.18.2",
     "js-file-downloader": "^1.1.24",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.0"
+    "mongoose": "^7.0.0",
+    "timeme.js": "^2.1.0"
   }
 }

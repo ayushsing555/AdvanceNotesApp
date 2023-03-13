@@ -6,8 +6,15 @@ const Nav = () => {
   const [state, setState] = useState(false);
 
   console.log(token + " Navbar");
-  const logout = () => {
+  const logout = async() => {
     localStorage.clear();
+    const res = await fetch("/logout",{
+         method:"post",
+         headers:{
+            "Content-Type":"application/json"
+         },
+         body:JSON.stringify({})
+    })
     setState(!state);
   };
   return (
@@ -77,7 +84,7 @@ const Nav = () => {
               </li>
             ) : (
               ""
-            )}
+            )}  
             {token == null ? (
               <li className="nav-item">
                 <NavLink className="nav-NavLink disabled" to="/signin">
@@ -91,7 +98,7 @@ const Nav = () => {
               <li className="nav-item">
                 <NavLink
                   className="nav-NavLink disabled"
-                  to="/analytics"
+                  to="/signin"
                   onClick={logout}
                 >
                   logout

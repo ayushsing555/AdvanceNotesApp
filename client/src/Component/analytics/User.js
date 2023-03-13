@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
 const User = () => {
@@ -70,11 +70,14 @@ const User = () => {
   const totalDownloads = Notedata.map((elem) => {
     Download += elem.downloads;
   });
-  getData();
+  useEffect(()=>{
+       getData();
+  },[])
+  
   return (
     <>
       <div className="container">
-        <div className="row rows-cols-3">
+        <div className="row rows-cols-6">
           {user.map((elem) => {
             const { tokens, createTime, email, AllData } = elem;
             return (
@@ -156,13 +159,13 @@ const User = () => {
                   j = j + 1;
                   const {
                     time,
-                    createDate,
+                    createTime,
                     readTime,
                     downloads,
                     identification,
                     generateID,
                   } = elem;
-                  let Dates = new Date(createDate);
+                  let Dates = new Date(createTime);
                   let D = Dates.getDate();
                   const day = Dates.getDay();
                   const month = Dates.getMonth();
@@ -175,7 +178,7 @@ const User = () => {
                   }
                   return (
                     <tr>
-                      <th scope="row">{j}</th>
+                      <th scope="row">{generateID}</th>
                       <td>{date}</td>
                       <td>{downloads}</td>
                       <td>{readTime.length}</td>

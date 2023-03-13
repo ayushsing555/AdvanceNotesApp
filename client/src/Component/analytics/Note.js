@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../App.css";
 const Note = () => {
@@ -46,13 +46,15 @@ const Note = () => {
     setReadTimes(data[0].readTime);
     setDetail(data);
   };
-  getData();
+  useEffect(()=>{
+     getData()
+  },[]
+    )
   return (
     <div className="container">
       <div className="row rows-cols-3">
         {detail.map((elem) => {
           const { generateID, favourite, readTime, downloads, read } = elem;
-          console.log(readTime);
           return (
             <>
               <div className="col cols">
@@ -84,6 +86,7 @@ const Note = () => {
                 <th scope="col">Session</th>
                 <th scope="col">Time</th>
                 <th scope="col">Date</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -103,6 +106,11 @@ const Note = () => {
                     <th scope="row">{i}</th>
                     <td>{Time}</td>
                     <td>{date}</td>
+                    <td>
+                      <button className="btn btn-info">
+                          Delete
+                      </button>
+                    </td>
                   </tr>
                 );
               })}

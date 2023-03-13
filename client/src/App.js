@@ -11,12 +11,14 @@ import Updatenote from "./Component/Updatenote";
 import Note from "./Component/analytics/Note";
 import User from "./Component/analytics/User";
 import Analytics from "./Component/analytics/Analytics";
+import Home from "./Component/Home";
 const App = () => {
   return (
     <>
       <Nav />
       <hr></hr>
       <Routes>
+        <Route path="/" element={<Home/>}/>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/addnote" element={<Addnote />} />
