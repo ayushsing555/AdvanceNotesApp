@@ -288,7 +288,35 @@ router.put("/read/:id", async (req, res) => {
   );
   const updateData = await data.addTime();
 });
-
+router.delete("/deleteNoteAnalytics/:generateID/:_id",authentication,async(req,res)=>{
+    const identification = req.identification;
+    console.log(identification);
+    const _id = req.params._id;
+    const generateID = req.params.generateID;
+    console.log(generateID+"generateID");
+    console.log(_id);
+    const deletes  = await Data.findOneAndUpdate({identification,generateID},{
+       $pull:{ readTime:{ _id}}
+    },{
+       new:true
+    });
+    if(deletes){
+       res.status(200).send({message:"successfully deleted"});
+    }
+})
+router.delete("/deleteLogin/:id",authentication,async(req,res)=>{
+      const _id = req.params.id;
+      const identification = req.identification;
+      const deleteSession = await User.findOneAndUpdate({identification},{
+           $pull:{ tokens:{_id}}
+      },{
+         new :true
+      })
+      
+      if(deleteSession){
+         res.status(200).json({message:"successfully deleted"});
+      }
+})
 router.put("/updateDownload", async (req, res) => {
   const { _id } = req.body;
   const result = await Data.findOne({ _id });

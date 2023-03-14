@@ -73,7 +73,17 @@ const User = () => {
   useEffect(()=>{
        getData();
   },[])
-  
+  const deletes = async(_id)=>{
+     const res = await fetch(`/deleteLogin/${_id}`,{
+        method:"delete",
+        headers:{
+           "Content-Type":"application/json"
+        },
+     })
+     if(res.status==200){
+        getData();
+     }
+  }
   return (
     <>
       <div className="container">
@@ -117,11 +127,13 @@ const User = () => {
                   <th scope="col">Session</th>
                   <th scope="col">Time</th>
                   <th scope="col">Date</th>
+                  <th scope="col">Delete</th>
                 </tr>
               </thead>
               <tbody>
                 {loginData.map((elem) => {
                   i = i + 1;
+                  const id = elem._id;
                   let Dates = new Date(elem.time);
                   let D = Dates.getDate();
                   const day = Dates.getDay();
@@ -135,6 +147,11 @@ const User = () => {
                       <th scope="row">{i}</th>
                       <td>{Time}</td>
                       <td>{date}</td>
+                      <th>
+                       <button className="btn" onClick={()=>deletes(id)}>
+                        <i style={{color:"red"}} class="fa-solid fa-trash"></i>
+                       </button>
+                      </th>
                     </tr>
                   );
                 })}

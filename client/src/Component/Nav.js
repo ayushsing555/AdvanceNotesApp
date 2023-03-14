@@ -8,13 +8,6 @@ const Nav = () => {
   console.log(token + " Navbar");
   const logout = async() => {
     localStorage.clear();
-    const res = await fetch("/logout",{
-         method:"post",
-         headers:{
-            "Content-Type":"application/json"
-         },
-         body:JSON.stringify({})
-    })
     setState(!state);
   };
   return (

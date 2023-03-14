@@ -13,7 +13,7 @@ const dataStructure = new mongoose.Schema({
     },
     identification:{
         type:String,
-        reqired:true
+        required:true
     },
     generateID:{
         type:String,

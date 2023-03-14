@@ -5,6 +5,7 @@ const Note = () => {
   const navigator = useNavigate();
   let i = 0;
   const [detail, setDetail] = useState([]);
+  const [render,setRender] = useState(true);
   const [readTimes, setReadTimes] = useState([]);
   var dayNames = [
     "Sunday",
@@ -50,6 +51,20 @@ const Note = () => {
      getData()
   },[]
     )
+    const deletes=async(_id)=>{
+      const res = await fetch(`/deleteNoteAnalytics/${id}/${_id}`,{
+          method:"delete",
+          headers:{
+            "Content-Type":"application/json",
+          },
+          body:JSON.stringify({
+             _id
+          })
+      })
+      if(res.status==200){
+          getData();
+      }
+    }
   return (
     <div className="container">
       <div className="row rows-cols-3">
@@ -92,6 +107,7 @@ const Note = () => {
             <tbody>
               {readTimes.map((elem) => {
                 i = i + 1;
+                let id = elem._id;
                 let Dates = new Date(elem.slot);
                 let D = Dates.getDate();
                 const day = Dates.getDay();
@@ -107,8 +123,8 @@ const Note = () => {
                     <td>{Time}</td>
                     <td>{date}</td>
                     <td>
-                      <button className="btn btn-info">
-                          Delete
+                      <button className="btn" onClick={()=>deletes(id)}>
+                      <i style={{color:"red"}} class="fa-solid fa-trash"></i>
                       </button>
                     </td>
                   </tr>
